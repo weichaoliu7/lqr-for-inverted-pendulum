@@ -1,0 +1,115 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+
+WorldInfo {
+  info [
+    "An example of hot to solve the Inverted Pendulum problem using a PID controller"
+  ]
+  title "Inverted Pendulum"
+  basicTimeStep 10
+  contactProperties [
+    ContactProperties {
+      material1 "robot_basis"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.04779992465542249 0.0576515683806081 0.9971917889083283 1.3873135343776557
+  position -0.36524596100001444 -2.807856423872997 0.5992087257367946
+  follow "robot:sliderjoint"
+}
+Floor {
+  size 100000 0.2
+  appearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/checkered_marble.jpg"
+      ]
+    }
+    roughness 1
+    metalness 0
+  }
+}
+Robot {
+  translation 0 0 0.05
+  rotation 0 0 1 3.1415899972779324
+  children [
+    DEF sliderjoint SliderJoint {
+      jointParameters JointParameters {
+        axis 1 0 0
+        dampingConstant 0.6
+      }
+      device [
+        DEF positionsensor1 PositionSensor {
+          name "positionsensor1"
+        }
+        DEF linearmotor LinearMotor {
+          name "linearmotor"
+          maxForce 40
+        }
+      ]
+      endPoint Solid {
+        children [
+          DEF hingejoint HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              dampingConstant 0.5
+            }
+            device [
+              DEF positionsensor2 PositionSensor {
+                name "positionsensor2"
+              }
+            ]
+            endPoint DEF pendulum_BB Solid {
+              translation 0 0.10750000000000003 0.2
+              rotation 0 1 0 0
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 1 0.333333 1
+                    metalness 0.2
+                  }
+                  geometry DEF pendulum_box Box {
+                    size 0.015 0.015 0.4
+                  }
+                }
+              ]
+              boundingObject USE pendulum_box
+              physics Physics {
+                mass 0.1
+              }
+            }
+          }
+          DEF cart Shape {
+            appearance PBRAppearance {
+              baseColor 0.333333 0 0.498039
+              metalness 0
+            }
+            geometry Box {
+              size 0.3 0.2 0.1
+            }
+          }
+        ]
+        physics Physics {
+          mass 0.135
+        }
+      }
+    }
+  ]
+  boundingObject Box {
+    size 2000 0.2 0.10001
+  }
+  physics Physics {
+    mass 0.1
+  }
+  controller "lqr"
+}
+TexturedBackground {
+  luminosity 10
+}

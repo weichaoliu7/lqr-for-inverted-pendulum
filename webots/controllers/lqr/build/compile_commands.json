@@ -1,0 +1,8 @@
+[
+{
+  "directory": "D:/graduate/vsCode/C/lqr-for-inverted-pendulum/webots/controllers/lqr/build",
+  "command": "E:/Webots/msys64/mingw64/bin/cc.exe  @CMakeFiles/lqr.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles/lqr.dir/src/lqr.c.obj -c D:/graduate/vsCode/C/lqr-for-inverted-pendulum/webots/controllers/lqr/src/lqr.c",
+  "file": "D:/graduate/vsCode/C/lqr-for-inverted-pendulum/webots/controllers/lqr/src/lqr.c",
+  "output": "CMakeFiles/lqr.dir/src/lqr.c.obj"
+}
+]
